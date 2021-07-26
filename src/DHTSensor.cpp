@@ -1,16 +1,24 @@
 #include "DHTSensor.h"
 
 bool DHTSensor::begin(){
+    lastReadingMillis = millis();
     dht.begin();
+    delay(30);
+    temperature = dht.readTemperature();
+    humidity = dht.readHumidity();
+    if(temperature == NAN||int(temperature)==0){
+        Serial.println("DHT not working");
+        return false;
+    }
     return true;
 }
 
 DHTSensor* DHTSensor::readData(){
-    temperature = dht.readTemperature();
-    humidity = dht.readHumidity();
-    Serial.print("Temp: ");
-    Serial.println(temperature);
-    
+    // Only poll data from the sensor every 2000 ms
+    if(millis()-lastReadingMillis > 2000){
+        temperature = dht.readTemperature();
+        humidity = dht.readHumidity();
+    }
     return this;
 }
 

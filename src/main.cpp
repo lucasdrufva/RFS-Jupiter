@@ -20,9 +20,7 @@ void setup(){
   logger.registerSensor(&dht);
   logger.registerSensor(&accel);
 
-  dht.begin();
-
-  if(!(logger.begin()&&accel.begin())){
+  if(!(logger.begin()&&accel.begin()&&dht.begin())){
     Serial.println("I dont work");
     while(true);
   }

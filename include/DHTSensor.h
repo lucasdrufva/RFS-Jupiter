@@ -15,4 +15,5 @@ private:
     DHT dht;
     float humidity;
     float temperature;
+    unsigned long lastReadingMillis;
 };
