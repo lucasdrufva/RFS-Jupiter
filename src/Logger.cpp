@@ -44,8 +44,6 @@ void Logger::registerSensor(Sensor* sensor){
 
 void Logger::logSensors(){
     String dataString = "";
-    dataString += millis() - startTime;
-    dataString += ",";
      for(std::vector<Sensor*>::iterator sensor = sensors.begin(); sensor != sensors.end(); ++sensor) {
         dataString += (*sensor)->readData()->toStringCSV();
         Serial.println((*sensor)->readData()->toStringCSV());
@@ -59,7 +57,7 @@ void Logger::logSensors(){
 }
 
 String Logger::generateLabels(){
-    String labelString = "#Millis,";
+    String labelString = "";
     for(std::vector<Sensor*>::iterator sensor = sensors.begin(); sensor != sensors.end(); ++sensor) {
         labelString += (*sensor)->getCSVLabels();
         if(sensor+1 != sensors.end()){

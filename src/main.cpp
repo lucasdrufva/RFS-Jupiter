@@ -3,11 +3,13 @@
 #include "logger.h"
 #include "DHTSensor.h"
 #include "AccelSensor.h"
+#include "TimerSensor.h"
 
 #define STATUS_LED LED_BUILTIN
 
 #define DEBUG_ENABLED false
 Logger logger(DEBUG_ENABLED);
+TimerSensor timer;
 DHTSensor dht;
 AccelSensor accel;
 
@@ -17,10 +19,11 @@ const long loopInterval = 50;
 void setup(){
   pinMode(STATUS_LED, OUTPUT);
 
+  logger.registerSensor(&timer);
   logger.registerSensor(&dht);
   logger.registerSensor(&accel);
 
-  if(!(logger.begin()&&accel.begin()&&dht.begin())){
+  if(!(logger.begin()&&timer.begin()&&accel.begin()&&dht.begin())){
     Serial.println("I dont work");
     while(true);
   }
